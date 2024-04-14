@@ -16,7 +16,7 @@ int main()
 {
 	queue<Point> route;
 	int visitedCnt = 1;
-	int row, column, movedCnt, temp, c;
+	int row, column;
 	cin >> row >> column;
 	string inputRow;
 	int ans = 1;
