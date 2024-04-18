@@ -42,35 +42,23 @@ int main()
 		{
 			currentPoint = route.front();
 			route.pop();
-
-			testPoint = currentPoint + 1;
-			if (testPoint == ansPoint)
+			if (currentPoint == ansPoint)
 			{
-				cout << ++ans;
+				cout << ans;
 				return 0;
 			}
+
+			testPoint = currentPoint + 1;
 			if (CheckPoint(testPoint)) route.push(testPoint);
 
 			testPoint = currentPoint - 1;
-			if (testPoint == ansPoint)
-			{
-				cout << ++ans;
-				return 0;
-			}
 			if (CheckPoint(testPoint)) route.push(testPoint);
 
 			testPoint = currentPoint * 2;
-			if (testPoint == ansPoint)
-			{
-				cout << ++ans;
-				return 0;
-			}
 			if (CheckPoint(testPoint)) route.push(testPoint);
 		}
 		ans++;
 	}
-
-	cout << ans;
 
 	return 0;
 }
