@@ -27,12 +27,6 @@ int main()
 	int tempQueueSize;
 	cin >> currentPoint >> ansPoint;
 
-	if (currentPoint == ansPoint)
-	{
-		cout << 0;
-		return 0;
-	}
-
 	route.push(currentPoint);
 
 	while (!route.empty())
