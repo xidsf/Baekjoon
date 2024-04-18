@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <stack>
 using namespace std;
 
@@ -15,23 +16,12 @@ bool ArroundCheck(Point point, int row, int column)
 {
 	if (point.x > column - 1 || point.x < 0) return false;
 	if (point.y > row - 1 || point.y < 0) return false;
-	if(map[point.y][point.x] == 1)
+	if (map[point.y][point.x] == 1)
 	{
 		map[point.y][point.x] = 0;
 		return true;
 	}
 	return false;
-}
-
-void InitMap()
-{
-	for (int i = 0; i < 50; i++)
-	{
-		for (int j = 0; j < 50; j++)
-		{
-			map[i][j] = 0;
-		}
-	}
 }
 
 int main()
@@ -47,10 +37,10 @@ int main()
 	Point currentPoint;
 	Point tempPoint;
 	int ans = 0;
-
+	
 	for (int i = 0; i < TestCase; i++)
 	{
-		InitMap();
+		memset(map, 0, sizeof(map));
 		ans = 0;
 		cin >> column >> row >> cnt;
 
@@ -84,15 +74,13 @@ int main()
 								s.push(tempPoint);
 							}
 						}
-						
+
 					}
 				}
 			}
 		}
 		cout << ans << "\n";
 	}
-
-
 
 	return 0;
 }
