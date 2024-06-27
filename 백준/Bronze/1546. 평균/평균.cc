@@ -1,31 +1,32 @@
 #include <iostream>
 using namespace std;
 
+
 int main()
 {
-	double *arr;
-	int N;
-	double sum = 0;
-	int high = 0;
-	cin >> N;
-	arr = new double[N];
-	for (int i = 0; i < N; i++)
+	int cnt;
+	cin >> cnt;
+	double* arr = new double[cnt];
+
+	double max = 0;
+	int maxidx = 0;
+
+	for (int i = 0; i < cnt; i++)
 	{
 		cin >> arr[i];
-		if (arr[i] > high) high = arr[i];
+		if (max < arr[i])
+		{
+			max = arr[i];
+			maxidx = i;
+		}
 	}
-	for (int i = 0 ;i < N; i++)
+	double average = 0;
+	for (int i = 0; i < cnt; i++)
 	{
-		arr[i] = arr[i] / high * 100;
+		average += (arr[i] / max) * 100;
 	}
-	for (int i = 0; i < N; i++)
-	{
-		sum += arr[i];
-	}
-	cout << fixed;
-	cout.precision(6);
-	cout << sum / double(N);
 
-	delete[]arr;
+	average = average / cnt;
+	cout << average;
 	return 0;
 }
