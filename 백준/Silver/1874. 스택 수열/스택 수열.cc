@@ -1,44 +1,54 @@
 #include <iostream>
-#include <stack>
 #include <vector>
+#include <stack>
 using namespace std;
-
 
 int main()
 {
-	stack<int> stack;
-	int cnt, temp = 0;
-	cin >> cnt;
-	int* arr = new int[cnt];
-	vector<char> v;
-	int inputCount = 1;
-	for (int i = 0; i < cnt; i++)
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
+	stack<int> s;
+
+	int currentInputNum = 1;
+	int currentIndex = 0;
+	int maxNum;
+	cin >> maxNum;
+	vector<int> arr;
+	vector<char> output;
+	int input;
+	
+	for (int i = 0; i < maxNum; i++)
 	{
-		cin >> arr[i];
+		cin >> input;
+		arr.push_back(input);
 	}
-	while (temp < cnt)
+
+	while (currentIndex < arr.size())
 	{
-		if (stack.empty() ||arr[temp] > stack.top())
+		if (s.empty() || arr[currentIndex] > s.top())
 		{
-			stack.push(inputCount++);
-			v.push_back('+');
+			s.push(currentInputNum);
+			output.push_back('+');
+			currentInputNum++;
 		}
-		else if (arr[temp] == stack.top())
+		else if(arr[currentIndex] == s.top())
 		{
-			stack.pop();
-			v.push_back('-');
-			temp++;
+			s.pop();
+			output.push_back('-');
+			currentIndex++;
 		}
 		else
 		{
 			cout << "NO";
 			return 0;
 		}
-	}
-	vector<char>::iterator itor = v.begin();
-	for (; itor != v.end(); itor++)
+	} 
+
+	for (int i = 0; i < output.size(); i++)
 	{
-		cout << *itor << "\n";
+		cout << output[i] << "\n";
 	}
 
 	return 0;
