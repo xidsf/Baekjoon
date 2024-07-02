@@ -1,84 +1,67 @@
 #include <iostream>
-#include <vector>
+#include <queue>
 using namespace std;
-
-class Queue
-{
-private:
-	vector<int> queue;
-	int begin = 0;
-	int end = 0;
-public:
-	void push(int value)
-	{
-		queue.push_back(value);
-		end++;
-	}
-	int pop()
-	{
-		if (begin == end) return -1;
-		int temp = queue.at(begin);
-		begin++;
-		return temp;
-	}
-	int size()
-	{
-		return end - begin;
-	}
-	int empty()
-	{
-		return (begin == end) ? 1 : 0;
-	}
-	int front()
-	{
-		if (begin == end) return -1;
-		else return queue.at(begin);
-	}
-	int back()
-	{
-		if (begin == end) return -1;
-		else return queue.at(end - 1);
-	}
-
-
-};
-
 
 int main()
 {
-	Queue queue;
-	int cnt, in;
-	string input;
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
+	int cnt;
 	cin >> cnt;
+
+	queue<int> q;
+	string s;
+	int input;
 	for (int i = 0; i < cnt; i++)
 	{
-		cin >> input;
-		if (input == "push")
+		cin >> s;
+
+		if (s == "push")
 		{
-			cin >> in;
-			queue.push(in);
+			cin >> input;
+			q.push(input);
 		}
-		else if (input == "pop")
+		else if(s == "pop")
 		{
-			cout << queue.pop() << "\n";
+			if (q.empty())
+			{
+				cout << -1 << "\n";
+				continue;
+			}
+			cout << q.front() << "\n";
+			q.pop();
 		}
-		else if (input == "size")
+		else if (s == "size")
 		{
-			cout << queue.size() << "\n";
+			cout << q.size() << "\n";
 		}
-		else if (input == "empty")
+		else if (s == "empty")
 		{
-			cout << queue.empty() << "\n";
+			cout << q.empty() ? 1 : 0;
+			cout << "\n";
 		}
-		else if (input == "front")
+		else if (s == "front")
 		{
-			cout << queue.front() << "\n";
+			if (q.empty())
+			{
+				cout << -1 << "\n";
+				continue;
+			}
+			cout << q.front() << "\n";
 		}
-		else if (input == "back")
+		else if (s == "back")
 		{
-			cout << queue.back() << "\n";
+			if (q.empty())
+			{
+				cout << -1 << "\n";
+				continue;
+			}
+			cout << q.back() << "\n";
 		}
 	}
+
 
 	return 0;
 }
