@@ -4,86 +4,89 @@
 #include <queue>
 using namespace std;
 
+bool visisted[1001];
+bool graph[1001][1001];
+int node, edge;
+int start;
 
-bool arr[1001][1001] = { 0, };
-bool isVisited[1001] = { 0, };
-const int MAX_SIZE = 1001;
-stack<int> s;
-queue<int> q;
-
-
-void dfs()
+void DFS()
 {
-    int current, min;
-    while (!s.empty())
-    {
-        min = INT32_MAX;
-        current = s.top();
-        
-        for (int i = 0; i < MAX_SIZE; i++)
-        {
-            if (arr[current][i] && !isVisited[i])
-            {
-                if (min > i) min = i;
-            }
-        }
-        if (min != INT32_MAX)
-        {
-            s.push(min);
-            isVisited[min] = true;
-            cout << min + 1 << " ";
-        }
-        else
-        {
-            s.pop();
-        }
-    }
+	stack<int> s;
+	s.push(start);
+	visisted[start] = true;
+	cout << start << " ";
+	int currentnode;
+
+	while (!s.empty())
+	{
+		currentnode = s.top();
+		for (int i = 1; i <= node; i++)
+		{
+			if (graph[currentnode][i] == true && visisted[i] == false)
+			{
+				s.push(i);
+				visisted[i] = true;
+				cout << i << " ";
+				break;
+			}
+		}
+
+		if (currentnode == s.top())
+		{
+			s.pop();
+		}
+	}
 }
 
-void bfs()
+void BFS()
 {
-    int current;
-    while (!q.empty())
-    {
-        current = q.front();
-        q.pop();
-        cout << current + 1 << " ";
-        for (int i = 0; i < MAX_SIZE; i++)
-        {
-            if (arr[current][i] && !isVisited[i])
-            {
-                isVisited[i] = true;
-                q.push(i);
-            }
-        }
-        
-    }
+	queue<int> q;
+	q.push(start);
+	visisted[start] = true;
+	int currentnode;
+
+	while (!q.empty())
+	{
+		currentnode = q.front();
+		cout << currentnode << " ";
+		q.pop();
+		for (int i = 1; i <= node; i++)
+		{
+			if (graph[currentnode][i] == true)
+			{
+				if (visisted[i] == false)
+				{
+					q.push(i);
+					visisted[i] = true;
+				}
+			}
+		}
+	}
 }
 
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 
-int main() {
-    
-    int cnt, line;
-    int temp1, temp2, start;
-    cin >> cnt >> line >> start;
+	cin >> node >> edge >> start;
 
-    for (int i = 0; i < line; i++)
-    {
-        cin >> temp1 >> temp2;
-        arr[temp1 - 1][temp2 - 1] = true;
-        arr[temp2 - 1][temp1 - 1] = true;
-    }
-    cout << start << " "; 
-    isVisited[start - 1] = true;
-    s.push(start - 1);
-    dfs();
-    
-    memset(isVisited, 0, sizeof(bool) * 1001);
+	for (int i = 0; i < edge; i++)
+	{
+		int node1, node2;
 
-    cout << "\n";
-    isVisited[start - 1] = true;
-    q.push(start - 1);
-    bfs();
+		cin >> node1 >> node2;
 
-    return 0;
+		graph[node1][node2] = true;
+		graph[node2][node1] = true;
+	}
+
+	memset(visisted, 0, 1001 * sizeof(bool));
+	DFS();
+	cout << "\n";
+	memset(visisted, 0, 1001 * sizeof(bool));
+	BFS();
+
+	return 0;
 }
