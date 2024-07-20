@@ -1,86 +1,75 @@
 #include <iostream>
-#include <cstring>
 #include <stack>
 using namespace std;
 
-int map[50][50] = { 0, };
-
-typedef struct point {
-	int x;
-	int y;
-}Point;
-
-Point arround[4] = { {0, 1}, {1, 0}, {-1, 0}, {0, -1} };
-
-bool ArroundCheck(Point point, int row, int column)
-{
-	if (point.x > column - 1 || point.x < 0) return false;
-	if (point.y > row - 1 || point.y < 0) return false;
-	if (map[point.y][point.x] == 1)
-	{
-		map[point.y][point.x] = 0;
-		return true;
-	}
-	return false;
-}
+bool map[51][51];
+pair<int, int> dir[4] = { {0, 1}, {1, 0}, {-1 , 0}, {0, -1} };
 
 int main()
 {
-	int TestCase;
-	cin >> TestCase;
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 
-	int row, column;
-	int cnt;
-	int posX, posY;
+	int testCase;
+	cin >> testCase;
 
-	stack<Point> s;
-	Point currentPoint;
-	Point tempPoint;
-	int ans = 0;
-	
-	for (int i = 0; i < TestCase; i++)
+	for (int i = 0; i < testCase; i++)
 	{
-		memset(map, 0, sizeof(map));
-		ans = 0;
-		cin >> column >> row >> cnt;
+		int width, height, cnt;
+		int ans = 0;
+		cin >> width >> height >> cnt;
 
 		for (int i = 0; i < cnt; i++)
 		{
-			cin >> posX >> posY;
-			map[posY][posX] = 1;
+			int x, y;
+			cin >> x >> y;
+
+			map[x][y] = true;
 		}
 
-		for (int i = 0; i < row; i++)
+		for (int i = 0; i < width; i++)
 		{
-			for (int j = 0; j < column; j++)
+			for (int j = 0; j < height; j++)
 			{
-				if (map[i][j] == 1)
+				if (map[i][j] == true)
 				{
 					ans++;
-					currentPoint.x = j;
-					currentPoint.y = i;
-					s.push(currentPoint);
-					map[i][j] = 0;
+					stack<pair<int, int>> s;
+					pair<int, int> currentPos;
+					s.push(make_pair(i, j));
+					map[i][j] = false;
 					while (!s.empty())
 					{
-						currentPoint = s.top();
-						s.pop();
+						currentPos = s.top();
 						for (int k = 0; k < 4; k++)
 						{
-							tempPoint.x = currentPoint.x + arround[k].x;
-							tempPoint.y = currentPoint.y + arround[k].y;
-							if (ArroundCheck(tempPoint, row, column))
+							pair<int, int> tempPos = { currentPos.first + dir[k].first, currentPos.second + dir[k].second };
+
+							if (tempPos.first < 0 || tempPos.second < 0)
 							{
-								s.push(tempPoint);
+								continue;
+							}
+
+							if (map[tempPos.first][tempPos.second] == true)
+							{
+								s.push(make_pair(tempPos.first, tempPos.second));
+								map[tempPos.first][tempPos.second] = false;
+								break;
 							}
 						}
-
+						if (currentPos == s.top())
+						{
+							s.pop();
+						}
 					}
 				}
 			}
 		}
+
 		cout << ans << "\n";
 	}
+
 
 	return 0;
 }
