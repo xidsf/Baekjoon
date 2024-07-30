@@ -1,7 +1,7 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
+long long arr[10000];
 
 int main()
 {
@@ -9,51 +9,44 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	int cnt, reqCount;
-	cin >> cnt >> reqCount;
+	int K, N;
+	cin >> K >> N;
 
-	long long min = 1;
-	long long max = 0;
+	long long s = 1;
+	long long e = 0;
 
-	vector<int> v;
-	for (int i = 0; i < cnt; i++)
+	for (int i = 0; i < K; i++)
 	{
-		int input;
-		cin >> input;
-		v.push_back(input);
-		if (max < input)
+		cin >> arr[i];
+		if (e < arr[i])
 		{
-			max = input;
+			e = arr[i];
 		}
 	}
-
-	long long mid;
-	int ans;
-
-	while (min <= max)
+	long long ans = -1;
+	
+	while (s <= e)
 	{
-		int lineCont = 0;
+		long long m = s + (e - s) / 2;
+		long long cnt = 0;
 
-		mid = min + (max - min) / 2;
-
-		for (int i = 0; i < v.size(); i++)
+		for (int i = 0; i < K; i++)
 		{
-			lineCont += v[i] / mid;
+			cnt += arr[i] / m;
 		}
 
-		if (lineCont >= reqCount)
+		if (cnt >= N)
 		{
-			min = mid + 1;
+			ans = max(ans, m);
+			s = m + 1;
 		}
 		else
 		{
-			max = mid - 1;
+			e = m - 1;
 		}
-		
-
 	}
 
-	cout << --min;
+	cout << ans;
 
 	return 0;
 }
