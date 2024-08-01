@@ -27,7 +27,14 @@ public:
 	}
 	int empty()
 	{
-		return (arrCount) == 0 ? 1 : 0;
+		if (arrCount == 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	int top()
 	{
@@ -41,6 +48,10 @@ public:
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
 	Stack stack;
 	int cnt;
 	string input;
