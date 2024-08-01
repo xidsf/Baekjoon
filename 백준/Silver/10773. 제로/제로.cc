@@ -1,26 +1,39 @@
 #include <iostream>
 #include <stack>
-
 using namespace std;
-
 
 int main()
 {
-	stack<int> stack;
-	int cnt, input, sum = 0;
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
+	stack<int> s;
+	int cnt;
 	cin >> cnt;
+
 	for (int i = 0; i < cnt; i++)
 	{
+		int input;
 		cin >> input;
-		if (input == 0 && !stack.empty()) stack.pop();
-		else stack.push(input);
+		if (input == 0)
+		{
+			s.pop();
+		}
+		else
+		{
+			s.push(input);
+		}
 	}
-	cnt = stack.size();
-	for (int i = 0; i < cnt; i++)
+
+	int sum = 0;
+	while (!s.empty())
 	{
-		sum += stack.top();
-		stack.pop();
+		sum += s.top();
+		s.pop();
 	}
+
 	cout << sum;
+
 	return 0;
 }
