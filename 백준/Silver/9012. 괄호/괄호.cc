@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stack>
-#include <vector>
 using namespace std;
-
 
 int main()
 {
@@ -10,52 +8,42 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	stack<char> s;
-	vector<string> v;
-
 	int cnt;
 	cin >> cnt;
-	string temp;
 
 	for (int i = 0; i < cnt; i++)
 	{
-		cin >> temp;
-		v.push_back(temp);
-	}
-	
+		stack<char> s;
 
-	for (int i = 0; i < cnt; i++)
-	{
-		for (int j = 0; j < v[i].size() ; j++)
+		string input;
+		cin >> input;
+
+		for (int i = 0; i < input.length(); i++)
 		{
-			if (!s.empty())
+			if (input[i] == '(')
 			{
-				if (s.top() == '(' && v[i][j] == ')')
+				s.push('(');
+			}
+			else
+			{
+				if (!s.empty() && s.top() == '(')
 				{
 					s.pop();
 				}
 				else
 				{
-					s.push(v[i][j]);
+					s.push(')');
+					break;
 				}
 			}
-			else
-			{
-				s.push(v[i][j]);
-			}
 		}
-		
 		if (s.empty())
 		{
-			cout << "YES\n";
+			cout << "YES" << "\n";
 		}
 		else
 		{
-			cout << "NO\n";
-		}
-		while (!s.empty())
-		{
-			s.pop();
+			cout << "NO" << "\n";
 		}
 	}
 
