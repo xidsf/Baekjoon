@@ -3,63 +3,46 @@
 #include <algorithm>
 using namespace std;
 
-enum {
-	None = 0, Home, Router
-};
-
 int main()
 {
-	vector<long long> co;
-	int homeCnt, routerCnt;
-	long long temp, max = 0;
-	cin >> homeCnt >> routerCnt;
+	int homeCount, routerCount;
+	cin >> homeCount >> routerCount;
 
-	for (int i = 0; i < homeCnt; i++)
+	vector<unsigned long long> map;
+	for (int i = 0; i < homeCount; i++)
 	{
+		unsigned long long temp;
 		cin >> temp;
-		co.push_back(temp);
-		if (max < temp) max = temp;
+		map.push_back(temp);
 	}
-	sort(co.begin(), co.end());
-	
-	int leftRouter;
-	long long currentNode = 0;
-	long long end = max - co[0];
-	long long begin = 1, mid;
 
-	while (begin <= end)
+	sort(map.begin(), map.end());
+
+	unsigned long long start = 1;
+	unsigned long long end = map.back();
+	unsigned long long ans = 0;
+
+	while (start <= end)
 	{
-		mid = (begin + end) / 2;
-		if (begin == end) break;
-		leftRouter = routerCnt - 1;
-		currentNode = 0;
-		for (int i = 1; i < homeCnt; i++)
+		unsigned long long mid = (end - start) / 2 + start;
+
+		unsigned long long currentPos = map[0];
+		int currentRouterCount = routerCount - 1;
+
+		for (int i = 1; i < homeCount; i++)
 		{
-			if (co[i] - co[currentNode] >= mid)
+			if (currentRouterCount <= 0) break;
+			if (map[i] - currentPos >= mid)
 			{
-				leftRouter--;
-				currentNode = i;
+				currentRouterCount--;
+				currentPos = map[i];
 			}
 		}
-		if (leftRouter <= 0)
+
+		if (currentRouterCount <= 0)
 		{
-			if (begin == mid)
-			{
-				mid++;
-				leftRouter = routerCnt - 1;
-				currentNode = 0;
-				for (int i = 1; i < homeCnt; i++)
-				{
-					if (co[i] - co[currentNode] >= mid)
-					{
-						leftRouter--;
-						currentNode = i;
-					}
-				}
-				if (leftRouter > 0) mid--;
-				break;
-			}
-			begin = mid;
+			ans = max(ans, mid);
+			start = mid + 1;
 		}
 		else
 		{
@@ -67,7 +50,6 @@ int main()
 		}
 	}
 
-	cout << mid;
-
+	cout << ans;
 	return 0;
 }
