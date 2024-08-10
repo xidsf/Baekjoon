@@ -3,33 +3,70 @@
 #include <algorithm>
 using namespace std;
 
+int length;
+vector<int> arr;
+vector<int> targets;
+
+bool BS(int target)
+{
+	int start = 0;
+	int end = length - 1;
+
+	while (start <= end)
+	{
+		int mid = (start + end) / 2;
+
+		if (arr[mid] == target)
+		{
+			return true;
+		}
+		else
+		{
+			if (arr[mid] > target)
+			{
+				end = mid - 1;
+			}
+			else if (arr[mid] < target)
+			{
+				start = mid + 1;
+			}
+		}
+	}
+	return false;
+}
+
 int main()
 {
-	vector<int> v1;
-	vector<int> v2;
-	int input, temp;
+	cin >> length;
 
-
-	cin >> input;
-	for (int i = 0; i < input; i++)
+	for (int i = 0; i < length; i++)
 	{
+		int temp;
 		cin >> temp;
-		v1.push_back(temp);
+		arr.push_back(temp);
 	}
-	cin >> input;
 
-	for (int i = 0; i < input; i++)
+	sort(arr.begin(), arr.end());
+
+	int cnt;
+	cin >> cnt;
+	for (int i = 0; i < cnt; i++)
 	{
+		int temp;
 		cin >> temp;
-		v2.push_back(temp);
+		targets.push_back(temp);
 	}
-	
-	sort(v1.begin(), v1.end());
 
-	for (int i = 0; i < v2.size(); i++)
+	for (int i = 0; i < targets.size(); i++)
 	{
-		temp = binary_search(v1.begin(), v1.end(), v2[i]) == true ? 1 : 0;
-		cout << temp << "\n";
+		if (BS(targets[i]))
+		{
+			cout << 1 << "\n";
+		}
+		else
+		{
+			cout << 0 << "\n";
+		}
 	}
 
 	return 0;
