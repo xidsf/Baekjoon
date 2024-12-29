@@ -1,20 +1,21 @@
 #include <iostream>
-using namespace std;
+
+int arr[201] = {0, };
 
 int main()
 {
-	int *n;
-	int cnt;
-	cin >> cnt;
-	n = new int[cnt];
-	for (int i = 0; i < cnt; i++) cin >> n[i];
-	int num, ncnt;
-	ncnt = 0;
-	cin >> num;
-	for (int i = 0; i < cnt; i++)
+	int input;
+	std::cin >> input;
+
+	for (int i = 0; i < input; i++)
 	{
-		if (n[i] == num) ncnt++;
+		int num;
+		std::cin >> num;
+		arr[num + 100]++;
 	}
-	cout << ncnt;
+
+	std::cin >> input;
+	std::cout << arr[input + 100];
+
 	return 0;
 }
